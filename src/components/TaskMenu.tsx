@@ -3,8 +3,15 @@ import { Button, Menu, MenuItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Task } from 'types/Task';
 
-const TaskMenu: VFC = () => {
+type Props = {
+  task: Task;
+  removeTask: (targetTask: Task) => void;
+  updateTask: (targetTask: Task, editedTask: Task) => void;
+};
+
+const TaskMenu: VFC<Props> = ({ task, removeTask, updateTask }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -12,6 +19,18 @@ const TaskMenu: VFC = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleRemove = (targetTask: Task) => {
+    handleClose();
+    removeTask(targetTask);
+  };
+  const handleUpdate = (targetTask: Task, editedTask: Task) => {
+    handleClose();
+    updateTask(targetTask, editedTask);
+  };
+  const editedTask = {
+    ...task,
+    title: 'edited!!',
   };
 
   return (
@@ -34,13 +53,13 @@ const TaskMenu: VFC = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>
-          <EditIcon />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => handleRemove(task)}>
           <DeleteIcon />
           Delete
+        </MenuItem>
+        <MenuItem onClick={() => handleUpdate(task, editedTask)}>
+          <EditIcon />
+          Edit
         </MenuItem>
       </Menu>
     </div>

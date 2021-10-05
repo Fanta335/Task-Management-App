@@ -1,21 +1,34 @@
 import { Card, CardActions, CardContent, Typography } from '@mui/material';
 import { VFC } from 'react';
+import { Task } from 'types/Task';
 import AddButton from './AddButton';
 import TaskCard from './TaskCard';
 
-const TaskGroup: VFC = () => (
+type Props = {
+  tasks: Task[];
+  addTask: () => void;
+  removeTask: (targetTask: Task) => void;
+  updateTask: (targetTask: Task, editedTask: Task) => void;
+};
+
+const TaskGroup: VFC<Props> = ({ tasks, addTask, removeTask, updateTask }) => (
   <>
-    <Card>
+    <Card sx={{ width: 320 }}>
       <CardContent>
         <Typography variant="h5" component="div">
           Group name
         </Typography>
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
+        {tasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            task={task}
+            removeTask={removeTask}
+            updateTask={updateTask}
+          />
+        ))}
       </CardContent>
       <CardActions>
-        <AddButton />
+        <AddButton onClick={addTask} />
       </CardActions>
     </Card>
   </>
