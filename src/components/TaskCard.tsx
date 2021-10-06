@@ -7,7 +7,8 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import GradeIcon from '@mui/icons-material/Grade';
+import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { useState, VFC } from 'react';
 import { Task } from 'types/Task';
 import TaskMenu from './TaskMenu';
@@ -21,11 +22,15 @@ type Props = {
 
 const TaskCard: VFC<Props> = ({ task, removeTask, updateTask }) => {
   const [open, setOpen] = useState(false);
+  const [starred, setStarred] = useState<boolean>(task.starred);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const toggleStarred = () => {
+    setStarred(!starred);
   };
 
   return (
@@ -67,8 +72,8 @@ const TaskCard: VFC<Props> = ({ task, removeTask, updateTask }) => {
               />
             </CardActions>
             <CardActions>
-              <Button>
-                <GradeIcon />
+              <Button onClick={toggleStarred}>
+                {starred ? <StarIcon /> : <StarOutlineIcon />}
               </Button>
             </CardActions>
           </Grid>

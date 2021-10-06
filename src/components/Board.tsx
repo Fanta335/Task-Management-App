@@ -17,6 +17,7 @@ const Board: VFC = () => {
       group: '',
       title: '',
       comment: '',
+      starred: false,
     };
 
     return newTask;

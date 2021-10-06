@@ -5,4 +5,5 @@ export type Task = {
   group: string;
   title: string;
   comment: string;
+  starred: boolean;
 };
