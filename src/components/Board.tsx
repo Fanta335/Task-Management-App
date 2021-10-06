@@ -14,9 +14,9 @@ const Board: VFC = () => {
       id,
       creationDate: newDate,
       updatedDate: newDate,
-      group: undefined,
-      title: undefined,
-      comment: undefined,
+      group: '',
+      title: '',
+      comment: '',
     };
 
     return newTask;
