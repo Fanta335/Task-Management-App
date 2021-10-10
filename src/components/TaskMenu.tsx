@@ -4,24 +4,27 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Task } from 'types/Task';
-import TaskPage from './TaskPage';
+import { Group } from 'types/Group';
+import TaskEditWindow from './TaskEditWindow';
 
 type Props = {
+  allGroups: Group[];
   task: Task;
   removeTask: (targetTask: Task) => void;
   updateTask: (targetTask: Task, editedTask: Task) => void;
-  taskPageOpen: boolean;
-  handleTaskPageClose: () => void;
-  handleClickTaskPageOpen: () => void;
+  TaskEditWindowOpen: boolean;
+  handleTaskEditWindowClose: () => void;
+  handleClickTaskEditWindowOpen: () => void;
 };
 
 const TaskMenu: VFC<Props> = ({
+  allGroups,
   task,
   removeTask,
   updateTask,
-  taskPageOpen,
-  handleTaskPageClose,
-  handleClickTaskPageOpen,
+  TaskEditWindowOpen,
+  handleTaskEditWindowClose,
+  handleClickTaskEditWindowOpen,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuOpen = Boolean(anchorEl);
@@ -60,15 +63,16 @@ const TaskMenu: VFC<Props> = ({
           <DeleteIcon />
           Delete
         </MenuItem>
-        <MenuItem onClick={handleClickTaskPageOpen}>
+        <MenuItem onClick={handleClickTaskEditWindowOpen}>
           <EditIcon />
           Edit
         </MenuItem>
       </Menu>
-      <TaskPage
+      <TaskEditWindow
+        allGroups={allGroups}
         task={task}
-        open={taskPageOpen}
-        handleClose={handleTaskPageClose}
+        open={TaskEditWindowOpen}
+        handleClose={handleTaskEditWindowClose}
         updateTask={updateTask}
       />
     </div>

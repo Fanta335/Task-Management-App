@@ -11,16 +11,18 @@ import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { useState, VFC } from 'react';
 import { Task } from 'types/Task';
+import { Group } from 'types/Group';
 import TaskMenu from './TaskMenu';
-import TaskPage from './TaskPage';
+import TaskEditWindow from './TaskEditWindow';
 
 type Props = {
+  allGroups: Group[];
   task: Task;
   removeTask: (targetTask: Task) => void;
   updateTask: (targetTask: Task, editedTask: Task) => void;
 };
 
-const TaskCard: VFC<Props> = ({ task, removeTask, updateTask }) => {
+const TaskCard: VFC<Props> = ({ allGroups, task, removeTask, updateTask }) => {
   const [open, setOpen] = useState(false);
   const [starred, setStarred] = useState<boolean>(task.starred);
   const handleClickOpen = () => {
@@ -55,6 +57,9 @@ const TaskCard: VFC<Props> = ({ task, removeTask, updateTask }) => {
                   </Typography>
                 )}
                 <Typography variant="body2" color="text.secondary">
+                  Group: {task.group.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
                   Comment: {task.comment}
                 </Typography>
               </CardContent>
@@ -63,12 +68,13 @@ const TaskCard: VFC<Props> = ({ task, removeTask, updateTask }) => {
           <Grid item xs={3}>
             <CardActions>
               <TaskMenu
+                allGroups={allGroups}
                 task={task}
                 removeTask={removeTask}
                 updateTask={updateTask}
-                taskPageOpen={open}
-                handleTaskPageClose={handleClose}
-                handleClickTaskPageOpen={handleClickOpen}
+                TaskEditWindowOpen={open}
+                handleTaskEditWindowClose={handleClose}
+                handleClickTaskEditWindowOpen={handleClickOpen}
               />
             </CardActions>
             <CardActions>
@@ -79,7 +85,8 @@ const TaskCard: VFC<Props> = ({ task, removeTask, updateTask }) => {
           </Grid>
         </Grid>
       </Card>
-      <TaskPage
+      <TaskEditWindow
+        allGroups={allGroups}
         task={task}
         open={open}
         handleClose={handleClose}

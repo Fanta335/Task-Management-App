@@ -4,19 +4,32 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
 } from '@mui/material';
 import { useState, VFC } from 'react';
+import { Group } from 'types/Group';
 import { Task } from 'types/Task';
 
 type Props = {
+  allGroups: Group[];
   task: Task;
   open: boolean;
   handleClose: () => void;
   updateTask: (targetTask: Task, editedTask: Task) => void;
 };
 
-const TaskPage: VFC<Props> = ({ task, open, handleClose, updateTask }) => {
+const TaskPage: VFC<Props> = ({
+  allGroups,
+  task,
+  open,
+  handleClose,
+  updateTask,
+}) => {
   const [currentTask, setCurrentTask] = useState(task);
   const [currentTitle, setCurrentTitle] = useState(task.title);
   const [currentComment, setCurrentComment] = useState(task.comment);
@@ -27,8 +40,12 @@ const TaskPage: VFC<Props> = ({ task, open, handleClose, updateTask }) => {
   const handleChangeComment = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentComment(e.target.value);
   };
-  const handleChangeGroup = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentGroup(e.target.value);
+  const handleChangeGroup = (e: SelectChangeEvent) => {
+    const groupName = e.target.value;
+    const selectedGroup = allGroups.filter(
+      (group) => group.name === groupName,
+    )[0];
+    setCurrentGroup(selectedGroup);
   };
   const updatedDate = new Date();
   const editedTask: Task = {
@@ -72,18 +89,23 @@ const TaskPage: VFC<Props> = ({ task, open, handleClose, updateTask }) => {
           value={currentComment}
           autoComplete="off"
         />
-        <TextField
-          autoFocus
-          margin="dense"
-          id="group"
-          label="Group"
-          type="text"
-          fullWidth
-          variant="standard"
-          onChange={handleChangeGroup}
-          value={currentGroup}
-          autoComplete="off"
-        />
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-standard-label">Group</InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={currentGroup.name}
+            onChange={handleChangeGroup}
+            label="Group"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {allGroups.map((group) => (
+              <MenuItem key={group.id} value={group.name}>{group.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" onClick={handleClose}>

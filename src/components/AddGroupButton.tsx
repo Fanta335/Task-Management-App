@@ -3,14 +3,14 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import { Button } from '@mui/material';
 
 type Props = {
-  onClick: () => void;
+  addGroup: () => void;
 };
 
-const AddButton: VFC<Props> = ({ onClick }) => (
+const AddButton: VFC<Props> = ({ addGroup }) => (
   <div>
-    <Button onClick={onClick}>
+    <Button onClick={addGroup}>
       <AddBoxIcon />
-      NEW
+      New group
     </Button>
   </div>
 );

@@ -1,4 +1,4 @@
-export type TaskGroup = {
+export type Group = {
   id: string;
   name: string;
 };
