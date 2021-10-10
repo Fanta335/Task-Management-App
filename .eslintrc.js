@@ -109,6 +109,7 @@ module.exports = {
         peerDependencies: false,
       },
     ],
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
   },
   overrides: [
     {
