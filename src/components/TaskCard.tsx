@@ -20,20 +20,27 @@ type Props = {
   task: Task;
   removeTask: (targetTask: Task) => void;
   updateTask: (targetTask: Task, editedTask: Task) => void;
+  toggleStarred: (targetTask: Task) => void;
 };
 
-const TaskCard: VFC<Props> = ({ allGroups, task, removeTask, updateTask }) => {
+const TaskCard: VFC<Props> = ({
+  allGroups,
+  task,
+  removeTask,
+  toggleStarred,
+  updateTask,
+}) => {
   const [open, setOpen] = useState(false);
-  const [starred, setStarred] = useState<boolean>(task.starred);
+  // const [starred, setStarred] = useState<boolean>(task.starred);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const toggleStarred = () => {
-    setStarred(!starred);
-  };
+  // const toggleStarred = () => {
+  //   setStarred(!starred);
+  // };
 
   return (
     <>
@@ -62,6 +69,9 @@ const TaskCard: VFC<Props> = ({ allGroups, task, removeTask, updateTask }) => {
                 <Typography variant="body2" color="text.secondary">
                   Comment: {task.comment}
                 </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  star: {task.starred ? 'true' : 'false'}
+                </Typography>
               </CardContent>
             </CardActionArea>
           </Grid>
@@ -78,8 +88,8 @@ const TaskCard: VFC<Props> = ({ allGroups, task, removeTask, updateTask }) => {
               />
             </CardActions>
             <CardActions>
-              <Button onClick={toggleStarred}>
-                {starred ? <StarIcon /> : <StarOutlineIcon />}
+              <Button onClick={() => toggleStarred(task)}>
+                {task.starred ? <StarIcon /> : <StarOutlineIcon />}
               </Button>
             </CardActions>
           </Grid>

@@ -18,6 +18,7 @@ type Props = {
   addTask: (parentGroup: Group) => void;
   removeTask: (targetTask: Task) => void;
   updateTask: (targetTask: Task, editedTask: Task) => void;
+  toggleStarred: (targetTask: Task) => void;
   renameGroup: (prevName: string, newName: string) => void;
 };
 
@@ -28,6 +29,7 @@ const TaskGroup: VFC<Props> = ({
   addTask,
   removeTask,
   updateTask,
+  toggleStarred,
   renameGroup,
 }) => {
   const [currentGroupName, setGroupName] = useState(group.name);
@@ -59,6 +61,7 @@ const TaskGroup: VFC<Props> = ({
               task={task}
               removeTask={removeTask}
               updateTask={updateTask}
+              toggleStarred={toggleStarred}
             />
           ))}
         </CardContent>

@@ -47,6 +47,11 @@ const Board: VFC = () => {
     },
     [tasks],
   );
+  const toggleStarred = (targetTask: Task) => {
+    const isStarred = targetTask.starred;
+    const starToggledTask: Task = { ...targetTask, starred: !isStarred };
+    updateTask(targetTask, starToggledTask);
+  };
   const createGroup = (): Group => {
     const id = uuidv4();
     const newGroup = {
@@ -69,8 +74,9 @@ const Board: VFC = () => {
     return true;
   };
   const renameGroup = (prevName: string, newName: string) => {
-    if (!isUniqueGroupName(newName)) alert('already exists');
-    else
+    if (!isUniqueGroupName(newName)) {
+      alert('already exists');
+    } else
       setGroup(
         groups.map((group) =>
           group.name === prevName ? { ...group, name: newName } : group,
@@ -79,8 +85,6 @@ const Board: VFC = () => {
   };
   const filterredTasks = (targetGroupId: string) =>
     tasks.filter((task) => task.group.id === targetGroupId);
-
-  console.log(groups);
 
   return (
     <Box sx={{ p: 1 }}>
@@ -94,6 +98,7 @@ const Board: VFC = () => {
               addTask={addTask}
               removeTask={removeTask}
               updateTask={updateTask}
+              toggleStarred={toggleStarred}
               renameGroup={renameGroup}
             />
           </Grid>
